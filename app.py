@@ -12,10 +12,15 @@
 # Также выводятся на экран и копия экрана в файл out_data.txt
 #
 
+import pandas as pd
+
 from chk_func import chk_on
-from data_func import inp_d, prn_ln, save_result
+from data_func import prn_ln, save_result
 
 if __name__ == "__main__":
+
+    # читаем входные данные
+    inp_d = pd.read_csv("test_data.csv", encoding="utf8")
 
     dlg_id = None     # только начали разбирать диалоги
     manager_greetings = manager_goodbye = False

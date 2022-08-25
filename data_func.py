@@ -5,9 +5,6 @@
 import sys
 import pandas as pd
 
-# читаем входные данные
-inp_d = pd.read_csv("test_data.csv", encoding="utf8")
-
 # создаем выходной фрэйм
 out_d = pd.DataFrame(columns=['dlg_id', 'line_n', 'role', 'event', 'text'])
 
