@@ -5,11 +5,12 @@
 import sys
 import pandas as pd
 
-# создаем выходной фрэйм
+# создаем выходной DataFrame
 out_d = pd.DataFrame(columns=['dlg_id', 'line_n', 'role', 'event', 'text'])
 
 # в файл выводим то-же, что и на экран
 out_f = open('out_data.txt', 'w', encoding="utf8")
+
 
 def prn_ln(dlg_id, line_n, role, event, text):
     # выводим и сохраняем результаты
