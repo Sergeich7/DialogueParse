@@ -5,6 +5,7 @@ dlg_id line_n    role event        text
      0      3  client имена        ангелина
      0      3  client КОМПАНИЯ     диджитал бизнес
      0    108  client прощание     
+                                   
 dlg_id line_n    role event        text
      1      0 MANAGER ПРИВЕТСТВИЕ  Да здравствуйте когда заканчивается
      1      1  client приветствие  

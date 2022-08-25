@@ -30,7 +30,7 @@ if __name__ == "__main__":
         if dlg_id != row['dlg_id']:
             # Начался новый диалог
 
-            if dlg_id:
+            if type(dlg_id) == int:
                 # Статистика по предыдущему диалогу, если не 1ый заход
                 if manager_greetings and manager_goodbye:
                     prn_ln(dlg_id, '', 'MANAGER', 'ВЕЖЛИВЫЙ',
@@ -54,17 +54,20 @@ if __name__ == "__main__":
                 if key in ['приветствие', 'представление', 'прощание']:
                     res = ''    # не нужно вытаскивать фразу
                     if role in "manager":
+
                         if key in 'приветствие':
                             # менеджер в диалоге поприветствовал
                             manager_greetings = True
                         elif key in 'прощание':
                             # менеджер в диалоге попрощался
                             manager_goodbye = True
+
                         res = row['text']
                         # выделяем большими буквами MANAGER ПРОЩАНИЕ,
                         # то что нужно вытащить в задании
                         event = event.upper()
                         role = role.upper()
+
                 elif key in 'компания':
                     # выделяем большими буквами КОМПАНИИ
                     event = event.upper()
