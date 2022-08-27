@@ -29,7 +29,8 @@ class Events():
 
     def _event_greetings(self):
         # проверка на приветствие
-        if re.search(r'(?:добрый|здравствуйте)', self.text.lower(), flags=re.I):
+        if re.search(r'(?:добрый|здравствуйте)',
+                self.text.lower(), flags=re.I):
             return ['приветствие', self.text]
         return None
 
@@ -56,9 +57,11 @@ class Events():
 
     def _event_goodbye(self):
         # проверка на представление
-        if re.search(r'(?:всего хорошего|до свидания|всего доброго)', self.text.lower(), flags=re.I):
+        if re.search(r'(?:всего хорошего|до свидания|всего доброго)',
+                self.text.lower(), flags=re.I):
             return ['прощание', self.text]
         return None
+
 
 if __name__ == '__main__':
     pass

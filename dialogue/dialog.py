@@ -36,5 +36,6 @@ class DialogueAnalyzer():
             data.prn(self.dlg_id, '', 'manager', 'ВЕЖЛИВЫЙ',
                 "поздоровался и попрощался")
 
+
 if __name__ == "__main__":
     pass

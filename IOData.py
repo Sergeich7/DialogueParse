@@ -12,7 +12,8 @@ class InpOutData():
         # читаем входные данные
         self.inp_d = pd.read_csv("test_data.csv", encoding="utf8")
         # создаем выходной DataFrame
-        self.out_d = pd.DataFrame(columns=['dlg_id', 'line_n', 'role', 'event', 'text'])
+        self.out_d = pd.DataFrame(
+            columns=['dlg_id', 'line_n', 'role', 'event', 'text'])
         # в файл выводим то-же, что и на экран
         self.out_f = open('out_data.txt', 'w', encoding="utf8")
 
