@@ -1,7 +1,8 @@
 #
 # DialogueParse - скрипт для парсинга диалогов
 #
-# Использовались библиотеки: NLTK, pymorphy2, re, Pandas
+# При разработке программы использовалось ООП и
+# библиотеки NLTK, pymorphy2, re, Pandas
 #
 # Программа извлекает из диалогов (test_data.csv) реплики с приветствием, с
 # прощаниями, с представлениями. Так-же извлекает имена людей и названия
@@ -12,70 +13,38 @@
 # Также выводятся на экран и копия в файл out_data.txt
 #
 
-import pandas as pd
+from dialogue import RoleParser, DialogueAnalyzer
+from IOData import data
 
-from chk_func import chk_on
-from data_func import prn_ln, save_result
 
 if __name__ == "__main__":
 
-    # читаем входные данные
-    inp_d = pd.read_csv("test_data.csv", encoding="utf8")
-
     dlg_id = None     # только начали разбирать диалоги
-    manager_greetings = manager_goodbye = False
+    dialogue = DialogueAnalyzer(dlg_id)
 
-    for i, row in inp_d.iterrows():
+    for i, row in data.inp_d.iterrows():
 
         if dlg_id != row['dlg_id']:
             # Начался новый диалог
 
             if type(dlg_id) == int:
                 # Статистика по предыдущему диалогу, если не 1ый заход
-                if manager_greetings and manager_goodbye:
-                    prn_ln(dlg_id, '', 'MANAGER', 'ВЕЖЛИВЫЙ',
-                        "поздоровался и попрощался")
-                prn_ln('', '', '', '', '')
+                dialogue.result()
+                # просто ввожу пустую строку отделяющая диалоги
+                data.prn('', '', '', '', '')
 
             dlg_id = row['dlg_id']
-            manager_greetings = manager_goodbye = False
-            prn_ln('dlg_id', 'line_n', 'role', 'event', 'text')
+            dialogue = DialogueAnalyzer(row['dlg_id'])
+            # просто шапка для каждого диалога
+            data.prn('dlg_id', 'line_n', 'role', 'event', 'text')
 
-        # проверяем все возможные события в строке
-        # события могут быть
-        # 'приветствие' 'представление' 'имена' 'компания' 'прощание'
-        # правила обработки описаны в chk_on
-        for key in chk_on:
-            res = chk_on[key]['func'](
-                row['text'], chk_on[key]['ptn'], chk_on[key]['ret_grp'])
-            if res:
-                role = row['role']
-                event = key
-                if key in ['приветствие', 'представление', 'прощание']:
-                    res = ''    # не нужно вытаскивать фразу
-                    if role in "manager":
+        # разбираем каждую строку на события
+        role_decoder = RoleParser(row)
+        role_decoder.parse()
+        # собираем нужную инфу из каждой строки для всего диалога
+        dialogue.accumulate(role_decoder)
 
-                        if key in 'приветствие':
-                            # менеджер в диалоге поприветствовал
-                            manager_greetings = True
-                        elif key in 'прощание':
-                            # менеджер в диалоге попрощался
-                            manager_goodbye = True
+    # выводим результаты анализа последнего диалога
+    dialogue.result()
 
-                        res = row['text']
-                        # выделяем большими буквами MANAGER ПРОЩАНИЕ,
-                        # то что нужно вытащить в задании
-                        event = event.upper()
-                        role = role.upper()
-
-                elif key in 'компания':
-                    # выделяем большими буквами КОМПАНИИ
-                    event = event.upper()
-
-                prn_ln(row['dlg_id'], row['line_n'], role, event, res)
-
-    # результаты последнего диалога
-    if manager_greetings and manager_goodbye:
-        prn_ln(dlg_id, '', 'MANAGER', 'ВЕЖЛИВЫЙ', "поздоровался и попрощался")
-
-    save_result()
+    data.save()
