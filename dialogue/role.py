@@ -30,7 +30,8 @@ class RoleParser(Events):
 
     @staticmethod
     def _role_decorator(func):
-        # декоратор для событий менеджеров
+        # сохраняет и изменяет выходные данные события с учетом роли
+        # декоратор не особо тут и нужен, но пусть будет так
         def wrapper(*args, **kwargs):
             self = args[0]
             res = func(*args, **kwargs)
@@ -41,10 +42,12 @@ class RoleParser(Events):
                 elif res[0] not in 'представление':
                     # сохраняем информацию о приветствии или прощании
                     self.polite_manager[res[0]] = True
+
                 if res[0] in 'компания' or self.role in "manager":
                     # если компания или вежливый менеджер
-                    # пишем большими буквами
+                    # пишем событие большими буквами
                     res[0] = res[0].upper()
+
             return res
         return wrapper
 
@@ -62,7 +65,6 @@ class RoleParser(Events):
 
     @_role_decorator
     def _event_company(self):
-        # переопределяем с учетом задания
         return super()._event_company()
 
 
