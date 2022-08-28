@@ -33,20 +33,26 @@ class RoleParser:
             if event.check(self.text):
                 # нашлось событие - выводим
 
-                if self.role not in "manager":
-                    # фразы клиентов не интересуют
-                    event.result = ''
-                elif event.name not in 'представление':
+                if self.role in "manager" and\
+                        event.name not in 'представление':
                     # сохраняем информацию о приветствии или прощании
                     self.polite_manager[event.name] = True
 
-                if event.name in 'компания' or self.role in "manager":
-                    # если компания или вежливый менеджер
-                    # пишем событие большими буквами
+                if self.role not in "manager" and\
+                        event.name not in ['компания', 'имена']:
+                    # блокируем фразы не интересуют относящиеся к делу
+                    event.result = ''
+
+                if event.name in 'компания' or\
+                        self.role in "manager":
+                    # если компания или вежливый менеджер пишем событие
+                    # большими буквами - типа, чтобы в глаза бросались
                     event.name = event.name.upper()
 
-                data.prn(self.dlg_id, self.line_n, self.role,
-                    event.name, event.result)
+                data.prn(
+                    self.dlg_id, self.line_n, self.role,
+                    event.name, event.result
+                    )
 
 
 if __name__ == '__main__':
