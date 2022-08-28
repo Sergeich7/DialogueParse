@@ -29,9 +29,6 @@ class InpOutData():
         sys.stdout = original_stdout
 
         # на экран
-        if event.isupper():
-            # подчеркнем важные строки
-            f_str = f'\033[4m{f_str}\033[0m'
         print(f_str)
 
         # в DataFrame
