@@ -22,7 +22,7 @@ if __name__ == "__main__":
     dlg_id = None     # только начали разбирать диалоги
     dialogue = DialogueAnalyzer(dlg_id)
 
-    for i, row in data.inp_d.iterrows():
+    for _, row in data.inp_d.iterrows():
 
         if dlg_id != row['dlg_id']:
             # Начался новый диалог

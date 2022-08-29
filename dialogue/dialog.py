@@ -13,9 +13,9 @@ class DialogueAnalyzer():
     def __init__(self, dlg_id):
         self.dlg_id = dlg_id
         self.polite_manager = {
-                'приветствие':  False,
-                'прощание':  False,
-            }
+            'приветствие':  False,
+            'прощание':  False,
+        }
 
     def accumulate(self, rp: RoleParser):
         # собираем информацию о приветствиях и прощаниях менеджера

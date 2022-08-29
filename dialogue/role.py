@@ -21,9 +21,9 @@ class RoleParser:
         ]
         self.dlg_id, self.line_n, self.role, self.text = row
         self.polite_manager = {
-                'приветствие': False,
-                'прощание': False,
-            }
+            'приветствие': False,
+            'прощание': False,
+        }
 
     def parse(self):
         # проверяем на все возможные события в строке
