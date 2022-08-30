@@ -1,6 +1,4 @@
-#
-# Модуль с классом для парсинга одной строки
-#
+"""Модуль с классом для парсинга одной строки."""
 
 import pandas as pd
 
@@ -10,8 +8,10 @@ from .events import EventGreetings, EventIntroduce,\
 
 
 class RoleParser:
+    """Класс парсинга одной строки."""
 
     def __init__(self, row: pd.Series):
+        """Инициализирует переменные."""
         self.all_events = [     # все искомые события
             EventGreetings(),
             EventIntroduce(),
@@ -26,8 +26,7 @@ class RoleParser:
         }
 
     def parse(self):
-        # проверяем на все возможные события в строке
-        # запускаем все методы начинающиеся с 'event_'
+        """Проверяем на все возможные события в строке."""
         for event in self.all_events:
             # проверка одного события по названию метода event_ЧТоТоТАМ
             if event.check(self.text):
